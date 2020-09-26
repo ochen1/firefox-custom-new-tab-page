@@ -133,6 +133,7 @@ const saveOptions = async e => {
 		theme: document.getElementById( 'theme' ).value,
 		customBackgroundColor: document.getElementById( 'customBackgroundColor' ).value,
 		forceOpenInTopFrame: getForceOpenInTopFrameValue(),
+		noIframe: document.getElementById( 'noIframe' ).checked,
 	};
 
 	log && console.debug( '#saveOptions', options );
@@ -148,6 +149,7 @@ const restoreOptions = async _ => {
 		'theme',
 		'customBackgroundColor',
 		'forceOpenInTopFrame',
+		'noIframe'
 	]);
 
 	log && console.debug( '#restoreOptions', options );
@@ -156,6 +158,7 @@ const restoreOptions = async _ => {
 	document.getElementById( 'customNewTabTitle' ).value = options.customNewTabTitle || '';
 	document.getElementById( 'theme' ).value = options.theme || 'none';
 	document.getElementById( 'customBackgroundColor' ).value = options.customBackgroundColor || '';
+	document.getElementById( 'noIframe' ).checked = options.noIframe || false;
 
 	setForceOpenInTopFrameValue( typeof options.forceOpenInTopFrame === 'undefined' ? false : options.forceOpenInTopFrame );
 

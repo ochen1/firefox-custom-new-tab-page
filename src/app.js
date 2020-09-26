@@ -33,19 +33,23 @@ const showCustomPage = opts => {
 	access browser (cookies, history, etc) or user files.
 	See https://mdn.io/Displaying_web_content_in_an_extension_without_security_issues
 	*/
-	const iframe = document.createElement( 'iframe' );
-	iframe.id = 'cntp-iframe';
-	iframe.classList.add( 'cntp-iframe' );
-	iframe.setAttribute( 'type', 'content' );
-	iframe.setAttribute( 'allow', 'geolocation' );
-	iframe.onload = _ => document.body.classList.remove( 'is-loading' );
-	iframe.src = opts.customNewTabUrl;
+	if ( opts.noIframe ) {
+		window.location.href = opts.customNewTabUrl;
+	} else {
+		const iframe = document.createElement( 'iframe' );
+		iframe.id = 'cntp-iframe';
+		iframe.classList.add( 'cntp-iframe' );
+		iframe.setAttribute( 'type', 'content' );
+		iframe.setAttribute( 'allow', 'geolocation' );
+		iframe.onload = _ => document.body.classList.remove( 'is-loading' );
+		iframe.src = opts.customNewTabUrl;
 
-	document.body.append( iframe );
+		document.body.append( iframe );
+	}
 };
 
 const init = _ => {
-	browser.storage.sync.get([ 'customNewTabUrl', 'customNewTabTitle', 'theme', 'customBackgroundColor' ])
+	browser.storage.sync.get([ 'customNewTabUrl', 'customNewTabTitle', 'theme', 'customBackgroundColor', 'noIframe' ])
 		.then( showCustomPage );
 };
 
